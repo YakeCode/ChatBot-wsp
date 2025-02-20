@@ -1,4 +1,6 @@
 import whatsappService from './whatsappService.js';
+import { sendWelcomeMenu } from './buttons/sendWelcomeMenu.js'
+import { handleMenuOption } from './responses/handleMenuOption.js'
 
 class MessageHandler {
   async handleIncomingMessage(message, senderInfo) {
@@ -7,12 +9,16 @@ class MessageHandler {
 
       if ( this.isGreeting(incomingMessage) ){
         await this.sendWelcomeMessage( message.from, message.id, senderInfo )
-        await this.sendWelcomeMenu (message.from)
+        await sendWelcomeMenu(message.from)
       }else{
         const response = `Echo: ${message.text.body}`;
       await whatsappService.sendMessage(message.from, response, message.id);
       }
       await whatsappService.markAsRead(message.id);
+    } else if ( message?.type === 'interactive') {
+      const option = message?.interactive?.button_reply?.id;
+      await handleMenuOption(message.from, option);
+      await whatsappService.markAsRead(message.id)
     }
   }
 
@@ -35,23 +41,6 @@ class MessageHandler {
     const name = this.getSenderName(senderInfo)
     const wellcomemessage =`Bienvenido${name ? ` ${name}` : ''}, te estas comunicando con mis servicios online de desarrollo.`;
     await whatsappService.sendMessage(to, wellcomemessage, messageId)
-  }
-
-  async sendWelcomeMenu (to) {
-    const menuMessage = '¿En que puedo ayudarte hoy?'
-    const buttons = [
-      {
-        type: 'reply', reply:{id: 'option_1', title: 'Conoce sobre mi'}
-      },
-      {
-        type: 'reply', reply:{id: 'option_2', title: 'Conoce mis servicios'}
-      },
-      {
-        type: 'reply', reply:{id: 'option_3', title: 'Agendar Una Cita'}
-      },
-    ];
-
-    await whatsappService.sendInteractiveButtons(to, menuMessage, buttons)
   }
 
 }
