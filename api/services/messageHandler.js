@@ -1,6 +1,7 @@
 import whatsappService from './whatsappService.js';
-import { sendWelcomeMenu } from './buttons/sendWelcomeMenu.js'
-import { handleMenuOption } from './responses/handleMenuOption.js'
+import { sendWellcomeMenu } from './buttons/sendWellcomeMenu.js'
+import interactiveHandlers from './interactiveHandlers/index.js';
+
 
 class MessageHandler {
   async handleIncomingMessage(message, senderInfo) {
@@ -9,7 +10,7 @@ class MessageHandler {
 
       if ( this.isGreeting(incomingMessage) ){
         await this.sendWelcomeMessage( message.from, message.id, senderInfo )
-        await sendWelcomeMenu(message.from)
+        await sendWellcomeMenu(message.from)
       }else{
         const response = `Echo: ${message.text.body}`;
       await whatsappService.sendMessage(message.from, response, message.id);
@@ -17,7 +18,7 @@ class MessageHandler {
       await whatsappService.markAsRead(message.id);
     } else if ( message?.type === 'interactive') {
       const option = message?.interactive?.button_reply?.id;
-      await handleMenuOption(message.from, option);
+      await this.handleInteractiveMessage(message.from, option);
       await whatsappService.markAsRead(message.id)
     }
   }
@@ -41,6 +42,18 @@ class MessageHandler {
     const name = this.getSenderName(senderInfo)
     const wellcomemessage =`Bienvenido${name ? ` ${name}` : ''}, te estas comunicando con mis servicios online de desarrollo.`;
     await whatsappService.sendMessage(to, wellcomemessage, messageId)
+  }
+
+  async handleInteractiveMessage(to, option) {
+    const handler = interactiveHandlers[option];
+    if (handler) {
+      await handler(to);
+    } else {
+      await whatsappService.sendMessage(
+        to,
+        'Lo siento, no entendí tu selección. Por favor elige una de las opciones del menú.'
+      );
+    }
   }
 
 }

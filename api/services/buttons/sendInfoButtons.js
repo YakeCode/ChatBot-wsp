@@ -1,6 +1,5 @@
 import whatsappService from '../whatsappService.js';
 
-
 export async function sendInfoButtons(to) {
     const menuMessage = 'Escoge una de las opciones';
     const buttons = [

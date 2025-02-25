@@ -1,7 +1,9 @@
 import whatsappService from '../whatsappService.js';
+import { sendInfoButtons } from '../buttons/sendInfoButtons.js'
+
 
 // Menú principal de bienvenida
-export async function sendWelcomeMenu(to) {
+export async function sendWellcomeMenu(to) {
   const menuMessage = '¿En que puedo ayudarte hoy?';
   const buttons = [
     {
@@ -17,5 +19,7 @@ export async function sendWelcomeMenu(to) {
 
   await whatsappService.sendInteractiveButtons(to, menuMessage, buttons);
 }
+
+
 
 
