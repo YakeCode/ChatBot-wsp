@@ -21,11 +21,11 @@
   },
   "homepage": "https://github.com/YakeCode/ChatBot-wsp#readme",
   "dependencies": {
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "axios": "1.7.9",
+    "dotenv": "16.4.7",
+    "express": "4.21.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "3.1.9"
   }
 }

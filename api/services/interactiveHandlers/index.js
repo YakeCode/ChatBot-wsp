@@ -6,6 +6,8 @@ import agenteHandler from './handlersWellcomeMenu/agente.js';
 import preciosServiciosHandler from './handlersInfoButtons/preciosServicios.js';
 import horariosHandler from './handlersInfoButtons/horarios.js';
 import otrosHandler from './handlersInfoButtons/otros.js';
+//Precios y servicios
+import pricesHandler from './PricesAndServices/prices.js'
 
 const interactiveHandlers = {
   info: infoHandler,
@@ -14,6 +16,7 @@ const interactiveHandlers = {
  precios_servicios: preciosServiciosHandler,
   horarios: horariosHandler,
   otros: otrosHandler,
+  precios: pricesHandler,
 };
 
 export default interactiveHandlers;

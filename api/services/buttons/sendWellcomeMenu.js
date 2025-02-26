@@ -1,6 +1,4 @@
 import whatsappService from '../whatsappService.js';
-import { sendInfoButtons } from '../buttons/sendInfoButtons.js'
-
 
 // Menú principal de bienvenida
 export async function sendWellcomeMenu(to) {
