@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon api/app.js",
-    "start": "node api/app.js"
+    "start": "node api/app.js",
+    "calendar": "nodemon api/calendar/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,11 @@
   },
   "homepage": "https://github.com/YakeCode/ChatBot-wsp#readme",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "axios": "1.7.9",
     "dotenv": "16.4.7",
-    "express": "4.21.2"
+    "express": "4.21.2",
+    "googleapis": "^105.0.0"
   },
   "devDependencies": {
     "nodemon": "3.1.9"
