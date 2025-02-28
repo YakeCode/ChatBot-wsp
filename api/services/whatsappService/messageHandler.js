@@ -3,6 +3,8 @@ import { isGreeting, sendWelcomeMessage} from './sendMessage/wellcomeMessage/sen
 import { sendWellcomeMenu } from './buttons/sendWellcomeMenu.js'
 import { sendMedia } from './sendMessage/sendMedia/sendMedia.js'
 import interactiveHandlers from './interactiveHandlers/index.js';
+//google
+import appendToSheet from '../googleServices/googleSheets/googleSheets.js';
 
 
 class MessageHandler {
@@ -50,6 +52,44 @@ class MessageHandler {
     }
   }
 
+  completeAppointment(to) {
+    const appointment = this.appointmentState[to];
+    delete this.appointmentState[to];
+    const now = new Date();
+
+    // Formatear fecha (DD/MM/YYYY)
+    const formattedDate = [
+        String(now.getDate()).padStart(2, '0'),         // Día
+        String(now.getMonth() + 1).padStart(2, '0'),    // Mes (+1 porque los meses van de 0-11)
+        now.getFullYear()                               // Año
+    ].join('/');
+
+    // Formatear hora (HH:MM en 24 horas)
+    const formattedTime = [
+        String(now.getHours()).padStart(2, '0'),       // Horas
+        String(now.getMinutes()).padStart(2, '0')       // Minutos
+    ].join(':');
+
+    const userData = [
+      to,
+      appointment.userName,
+      appointment.contactNumber,
+      appointment.reason,
+      formattedDate,
+      formattedTime,
+
+    ];
+
+    console.log(userData);
+    appendToSheet(userData);
+
+    return `Gracias por agendar tu cita. Hemos registrado la siguiente información:
+          - Tu nombre: ${appointment.userName}
+          - Contacto: ${appointment.contactNumber}
+          - Motivo: ${appointment.reason}
+          Un agente se pondrá en contacto contigo pronto.`;
+  }
+
   async handleAppointmentFlow(to, message) {
     const state = this.appointmentState[to];
     let response;
@@ -67,14 +107,7 @@ class MessageHandler {
         break;
       case 'reason':
         state.reason = message;
-        // Limpiamos el estado al finalizar
-        delete this.appointmentState[to];
-        response = `Gracias por agendar tu cita. Hemos registrado la siguiente información:
-        - Tu nombre: ${state.userName}
-        - Contacto: ${state.contactNumber}
-        - Motivo: ${state.reason}
-
-        Un agente se pondrá en contacto contigo pronto.`;
+        response = this.completeAppointment(to)
         break;
     }
 

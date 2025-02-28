@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+/*import { promises as fs } from 'fs';
 import path from 'path';
 import process from 'process';
 import { authenticate } from '@google-cloud/local-auth';
@@ -21,6 +21,7 @@ const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json');
  *
  * @return {Promise<OAuth2Client|null>}
  */
+/*
 async function loadSavedCredentialsIfExist() {
   try {
     const content = await fs.readFile(TOKEN_PATH);
@@ -30,6 +31,7 @@ async function loadSavedCredentialsIfExist() {
     return null;
   }
 }
+*/
 
 /**
  * Serializa credenciales a un archivo compatible con GoogleAuth.fromJSON.
@@ -37,6 +39,7 @@ async function loadSavedCredentialsIfExist() {
  * @param {OAuth2Client} client
  * @return {Promise<void>}
  */
+/*
 async function saveCredentials(client) {
   const content = await fs.readFile(CREDENTIALS_PATH);
   const keys = JSON.parse(content);
@@ -48,12 +51,13 @@ async function saveCredentials(client) {
     refresh_token: client.credentials.refresh_token,
   });
   await fs.writeFile(TOKEN_PATH, payload);
-}
+}*/
 
 /**
  * Carga o solicita autorización para llamar a las APIs.
  *
  */
+/*
 async function authorize() {
   let client = await loadSavedCredentialsIfExist();
   if (client) {
@@ -67,12 +71,13 @@ async function authorize() {
     await saveCredentials(client);
   }
   return client;
-}
+}*/
 
 /**
  * Lista los próximos 10 eventos en el calendario principal del usuario.
- * @param {google.auth.OAuth2} auth Un cliente OAuth2 autorizado.
+ *@param {google.auth.OAuth2} auth Un cliente OAuth2 autorizado.
  */
+/*
 async function listEvents(auth) {
   const calendar = google.calendar({version: 'v3', auth});
   const res = await calendar.events.list({
@@ -101,3 +106,4 @@ try {
 } catch (error) {
   console.error(error);
 }
+*/

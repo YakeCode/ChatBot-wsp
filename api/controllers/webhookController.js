@@ -1,5 +1,5 @@
 import config from '../config/env.js';
-import messageHandler from '../services/messageHandler.js';
+import messageHandler from '../services/whatsappService/messageHandler.js';
 
 class WebhookController {
   async handleIncoming(req, res) {
