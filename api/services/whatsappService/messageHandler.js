@@ -5,6 +5,7 @@ import { sendMedia } from './sendMessage/sendMedia/sendMedia.js'
 import interactiveHandlers from './interactiveHandlers/index.js';
 //google
 import appendToSheet from '../googleServices/googleSheets/googleSheets.js';
+import  GoogleCalendarClient from '../googleServices/googleCalendar/googleCalendar.js';
 
 
 class MessageHandler {
@@ -80,8 +81,13 @@ class MessageHandler {
 
     ];
 
+    //const eventData =
+
     console.log(userData);
     appendToSheet(userData);
+    GoogleCalendarClient.getNextEvent();
+    GoogleCalendarClient.logNextEvent();
+
 
     return `Gracias por agendar tu cita. Hemos registrado la siguiente información:
           - Tu nombre: ${appointment.userName}
@@ -116,3 +122,4 @@ class MessageHandler {
 }
 
 export default new MessageHandler();
+
